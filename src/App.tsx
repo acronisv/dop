@@ -1,26 +1,42 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Button} from "./components/Button";
+
+type getType = {
+    "userId": number,
+    "id": number,
+    "title": string
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [get, setGet] = useState<Array<getType>>([])
+
+    const getRequestHandler = () => {
+        setGet([])
+    }
+
+    useEffect(()=>{fetch('https://jsonplaceholder.typicode.com/albums')
+        .then(response => response.json())
+        .then(json => setGet(json))},[])
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <Button nickName={"Get request"} callback={getRequestHandler}/>
+                <ul>{get.map((el)=>{
+                    return (
+                            <li>
+                                <span>{el.userId} </span>
+                                <span>{el.id} </span>
+                                <span>{el.title}</span>
+                            </li>
+                    )
+                })}</ul>
+            </header>
+        </div>
+    );
 }
 
 export default App;

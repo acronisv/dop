@@ -28,7 +28,7 @@ function App() {
                 <ul>{get.map((el)=>{
                     return (
                             <li>
-                                <span>UserId: {el.userId} </span>
+                                <span>{el.userId} </span>
                                 <span>{el.id} </span>
                                 <span>{el.title}</span>
                             </li>
